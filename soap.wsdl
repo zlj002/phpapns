@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://localhost:1236/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="soap" targetNamespace="http://localhost:1236/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://localhost:1236/">
+      <xsd:element name="SendOneMessage">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="in" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="SendOneMessageResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="out" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="SendOneMessageRequest">
+    <wsdl:part name="deviceToken" type="xsd:string"/>
+    <wsdl:part name="message" type="xsd:string"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="SendOneMessageResponse">
+    <wsdl:part name="result" type="xsd:boolean" />
+  </wsdl:message>
+  <wsdl:portType name="soap">
+    <wsdl:operation name="SendOneMessage">
+      <wsdl:input message="tns:SendOneMessageRequest"/>
+      <wsdl:output message="tns:SendOneMessageResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="soapSOAP" type="tns:soap">
+  	<soap:binding style="document"
+  		transport="http://schemas.xmlsoap.org/soap/http" />
+  	<wsdl:operation name="SendOneMessage">
+  		<soap:operation
+  			soapAction="http://localhost:1236/SendOneMessage" />
+  		<wsdl:input>
+  			<soap:body use="literal" />
+  		</wsdl:input>
+  		<wsdl:output>
+  			<soap:body use="literal" />
+  		</wsdl:output>
+  	</wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="soap">
+    <wsdl:port binding="tns:soapSOAP" name="soapSOAP">
+      <soap:address location="http://localhost:1236/PushAPNSServer.php"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
